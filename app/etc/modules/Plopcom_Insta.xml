@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plopcom_Insta extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Plopcom
+ * @package        Plopcom_Insta
+ * @copyright      Copyright (c) 2019
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+    <modules>
+        <Plopcom_Insta>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Core />
+             </depends>
+        </Plopcom_Insta>
+    </modules>
+</config>

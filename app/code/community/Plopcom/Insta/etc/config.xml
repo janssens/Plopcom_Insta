@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plopcom_Insta extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Plopcom
+ * @package        Plopcom_Insta
+ * @copyright      Copyright (c) 2019
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+    <modules>
+        <Plopcom_Insta>
+            <version>2.0.3</version>
+        </Plopcom_Insta>
+    </modules>
+    <global>
+        <resources>
+            <plopcom_insta_setup>
+                <setup>
+                    <module>Plopcom_Insta</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </plopcom_insta_setup>
+        </resources>
+        <blocks>
+            <plopcom_insta>
+                <class>Plopcom_Insta_Block</class>
+            </plopcom_insta>
+        </blocks>
+        <helpers>
+            <plopcom_insta>
+                <class>Plopcom_Insta_Helper</class>
+            </plopcom_insta>
+        </helpers>
+        <models>
+            <insta>
+                <class>Plopcom_Insta_Model</class>
+            </insta>
+            <plopcom_insta>
+                <class>Plopcom_Insta_Model</class>
+                <resourceModel>plopcom_insta_resource</resourceModel>
+            </plopcom_insta>
+            <plopcom_insta_resource>
+                <class>Plopcom_Insta_Model_Resource</class>
+                <entities>
+                    <post>
+                        <table>plopcom_insta_post</table>
+                    </post>
+                    <post_store>
+                        <table>plopcom_insta_post_store</table>
+                    </post_store>
+                </entities>
+            </plopcom_insta_resource>
+        </models>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <plopcom_insta>
+                    <file>plopcom_insta.xml</file>
+                </plopcom_insta>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Plopcom_Insta>
+                    <files>
+                        <default>Plopcom_Insta.csv</default>
+                    </files>
+                </Plopcom_Insta>
+            </modules>
+        </translate>
+        <global_search>
+            <post>
+                <class>plopcom_insta/adminhtml_search_post</class>
+                <acl>plopcom_insta</acl>
+            </post>
+        </global_search>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Plopcom_Insta before="Mage_Adminhtml">Plopcom_Insta_Adminhtml</Plopcom_Insta>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <layout>
+            <updates>
+                <plopcom_insta>
+                    <file>plopcom_insta.xml</file>
+                </plopcom_insta>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Plopcom_Insta>
+                    <files>
+                        <default>Plopcom_Insta.csv</default>
+                    </files>
+                </Plopcom_Insta>
+            </modules>
+        </translate>
+        <routers>
+            <instagram>
+                <use>standard</use>
+                <args>
+                    <frontName>instagram</frontName>
+                    <module>Plopcom_Insta</module>
+                </args>
+            </instagram>
+        </routers>
+    </frontend>
+    <default>
+        <plopcom_insta>
+            <post>
+                <breadcrumbs>1</breadcrumbs>
+            </post>
+        </plopcom_insta>
+    </default>
+    <crontab>
+        <jobs>
+            <plopcom_insta_load_new_post>
+                <schedule>
+                    <cron_expr>0 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>plopcom_insta/observer::loadNewPosts</model>
+                </run>
+            </plopcom_insta_load_new_post>
+        </jobs>
+    </crontab>
+</config>

@@ -1,0 +1,9 @@
+#Plopcom_Insta
+app/locale/fr_FR/*.csv                                                              app/locale/fr_FR/
+app/code/community/Plopcom/Insta/                                                   app/code/community/Plopcom/Insta/
+app/design/adminhtml/default/default/layout/*.xml                                   app/design/adminhtml/default/default/layout/
+app/design/adminhtml/default/default/template/plopcom/insta/                        app/design/adminhtml/default/default/template/plopcom/insta/
+app/design/frontend/default/default/layout/*.xml                                    app/design/frontend/default/default/layout/
+app/design/frontend/default/default/template/plopcom/insta/                         app/design/frontend/default/default/template/plopcom/insta/
+app/etc/modules/*.xml                                                               app/etc/modules/
+js/plopcom/insta/                                                                   js/plopcom/insta/

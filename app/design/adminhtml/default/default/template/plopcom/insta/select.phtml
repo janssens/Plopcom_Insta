@@ -1,0 +1,94 @@
+<!--
+/**
+ * Plopcom_Insta extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Plopcom
+ * @package        Plopcom_Insta
+ * @copyright      Copyright (c) 2019
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<style type="text/css">
+    #instafeed a.selected {
+        background: #d34704 none repeat scroll 0 0;
+    }
+</style>
+<div class="content-header">
+    <h3 class="icon-head head-adminhtml-post">Select from the post appearing below (Click to select)</h3>
+</div>
+<div id="instafeed"></div>
+<br/><button id="load-more">load more</button>
+<br/><br/><br/><br/>
+<?php 
+    $post_type = Mage::getStoreConfig('plopcom_insta/post/post_type');
+    $user_id = Mage::getStoreConfig('plopcom_insta/post/user_id');
+    $access_token = Mage::getStoreConfig('plopcom_insta/post/access_token');
+    $tagname = Mage::getStoreConfig('plopcom_insta/post/tag_name');
+    $client_id = Mage::getStoreConfig('plopcom_insta/post/client_id');
+?>
+<?php if($post_type=='hashtag'): ?>
+    <script type="text/javascript">
+    	jQuery(function($){
+    	var loadButton = document.getElementById('load-more');
+        var feed = new Instafeed({
+            get: 'tagged',
+            tagName: "<?php echo $tagname;?>",
+            clientId: "<?php echo $client_id;?>",
+            accessToken: "<?php echo $access_token; ?>",
+            limit: 14,
+            template: '<a href="#"><img data-attr="{{id}}" src="{{image}}" alt="{{caption}}" data-username="{{link}}" /></a>',
+            after: function() {
+                if (!this.hasNext()) {
+                    loadButton.setAttribute('disabled', 'disabled');
+                }
+            },
+        });
+        if(loadButton){
+    	    loadButton.addEventListener('click', function() {
+    	        feed.next();
+    	    });
+    	}
+        feed.run();
+    });
+    </script>
+<?php elseif($post_type=='account'): ?>
+    <script type="text/javascript">
+        jQuery(function($){
+        var loadButton = document.getElementById('load-more');
+        var feed = new Instafeed({
+            get: 'user',
+            userId: "<?php echo $user_id; ?>",
+            accessToken: "<?php echo $access_token; ?>",
+            limit: 14,
+            template: '<a href="#"><img data-attr="{{id}}" src="{{image}}" alt="{{caption}}" data-username="{{link}}" /></a>',
+            after: function() {
+                if (!this.hasNext()) {
+                    loadButton.setAttribute('disabled', 'disabled');
+                }
+            },
+        });
+        if(loadButton){
+            loadButton.addEventListener('click', function() {
+                feed.next();
+            });
+        }
+        feed.run();
+    });
+    </script>
+<?php endif; ?>
+<script type="text/javascript">
+jQuery(document).on('click','#instafeed a img',function(){
+	jQuery(this).parent().addClass('selected').siblings().removeClass('selected');
+    jQuery('#post_media_id').val(jQuery(this).attr('data-attr'));
+    jQuery('#post_username').val(jQuery(this).attr('data-username'));
+    jQuery('#post_caption').val(jQuery(this).attr('alt'));
+    return false;
+});    
+</script>

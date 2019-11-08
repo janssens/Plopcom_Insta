@@ -1,0 +1,65 @@
+<?php
+/**
+ * Plopcom_Insta extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category       Plopcom
+ * @package        Plopcom_Insta
+ * @copyright      Copyright (c) 2019
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Post list template
+ *
+ * @package     Plopcom_Insta
+ */
+?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php
+$link_posts = Mage::getStoreConfig('plopcom_insta/post_features/link_posts');
+$caption = Mage::getStoreConfig('plopcom_insta/post_features/caption');
+?>
+<div class="row plopcom-zone instagram">
+    <?php
+    echo $this->getChildHtml("instagram_look");
+    ?>
+    <div class="col-md-9 col-sm-9">
+        <div class="row instabloc">
+            <?php
+            echo $this->getChildHtml("instagram_posts");
+            ?>
+            <?php $_posts = $this->getPosts(4); ?> <!--/ Fetches only the selected posts from backend -->
+            <?php if ($_posts->getSize() > 0) :?>
+                <?php foreach ($_posts as $_post) : ?>
+                    <?php
+                    echo '<figure class="insta col-md-4 col-6">';
+                    echo '<div class="black w-100">';
+                    if($link_posts){
+                        echo '<a href="'.$_post->getLink().'">';
+                    }
+                    echo '<img src="'.$_post->getMediaUrl().'" alt="'.$_post->getAlt().'"/>';
+                    if($link_posts){
+                        echo '</a>';
+                    }
+                    echo '</div>';
+                    echo '<figcaption>';
+                    echo '<i class="insta"></i>';
+                    echo '<p>';
+                    echo ($caption) ? $_post->getCaption() : '';
+                    echo '</p>';
+                    echo '</figcaption>';
+                    echo '</figure>';
+                    ?>
+                <?php endforeach;?>
+            <?php else : ?>
+                <?php echo Mage::helper('plopcom_insta')->__('There are no posts at this moment');?>
+            <?php endif;?>
+        </div>
+    </div>
+</div>

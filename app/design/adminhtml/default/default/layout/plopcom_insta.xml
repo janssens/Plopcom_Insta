@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plopcom_Insta extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Plopcom
+ * @package        Plopcom_Insta
+ * @copyright      Copyright (c) 2019
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<layout>
+    <adminhtml_instagram_post_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>plopcom_insta/post</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="plopcom_insta/adminhtml_post" name="post" />
+
+        </reference>
+    </adminhtml_instagram_post_index>
+    <adminhtml_instagram_post_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="plopcom_insta/adminhtml_post_grid" name="post_grid"/>
+        </block>
+    </adminhtml_instagram_post_grid>
+    <!-- Post add/edit action -->
+    <adminhtml_instagram_post_edit>
+        <reference name="head">
+            <action method="setTemplate">
+                <template>plopcom/insta/page/head.phtml</template>
+            </action>
+            <!--<block type="core/text" name="jquery" as="jquery">-->
+                <!--<action method="setText">-->
+                    <!--<text><![CDATA[<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>]]></text>-->
+                <!--</action>-->
+            <!--</block>-->
+            <!--<block type="core/text" name="jquerynoConflict" as="jquerynoConflict">-->
+                <!--<action method="setText">-->
+                    <!--<text><![CDATA[<script>$.noConflict();</script>]]></text>-->
+                <!--</action>-->
+            <!--</block>-->
+            <!--<action method="addJs"><script>plopcom/insta/instafeed.min.js</script></action>-->
+        </reference>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>plopcom_insta/post</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <!--<block type="core/template" template="plopcom/insta/select.phtml"></block>-->
+            <block type="core/template" template="plopcom/insta/media_url.phtml"></block>
+            <block type="plopcom_insta/adminhtml_post_edit" name="post_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="plopcom_insta/adminhtml_post_edit_tabs" name="post_tabs"></block>
+        </reference>
+    </adminhtml_instagram_post_edit>
+
+</layout>

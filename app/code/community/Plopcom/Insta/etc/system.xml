@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plopcom_Insta extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Plopcom
+ * @package        Plopcom_Insta
+ * @copyright      Copyright (c) 2019
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<config>
+    <tabs>
+        <plopcom translate="label">
+            <label>Plopcom.fr</label>
+            <sort_order>250</sort_order>
+        </plopcom>
+    </tabs>
+    <sections>
+        <plopcom_insta translate="label" module="plopcom_insta">
+            <class>separator-top</class>
+            <label>Instagram</label>
+            <tab>plopcom</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <post translate="label" module="plopcom_insta">
+                    <label>Instagram Post Configurations</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <!--<use_local_images translate="label">-->
+                            <!--<label>Use Local images</label>-->
+                            <!--<frontend_type>select</frontend_type>-->
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <!--<sort_order>1</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</use_local_images>-->
+                        <!--<breadcrumbs translate="label">-->
+                            <!--<label>Use Breadcrumbs</label>-->
+                            <!--<frontend_type>select</frontend_type>-->
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                            <!--<sort_order>10</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</breadcrumbs>-->
+                        <!--<post_type>-->
+                            <!--<label>Post source</label>-->
+                            <!--<frontend_type>select</frontend_type>-->
+                            <!--<source_model>insta/options</source_model>-->
+                            <!--<sort_order>20</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</post_type>-->
+                        <!--<user_id>-->
+                            <!--<label>User ID</label>-->
+                            <!--<frontend_type>text</frontend_type>-->
+                            <!--<sort_order>30</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                            <!--<comment><![CDATA[ <a href="https://smashballoon.com/instagram-feed/find-instagram-user-id/" target="_blank">Username to user id</a> ]]></comment>-->
+                            <!--<depends><post_type>account</post_type></depends>-->
+                        <!--</user_id>-->
+                        <tag_name>
+                            <label>Tag Name (hashtag)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>without hastag sign</comment>
+                            <depends><post_type>hashtag</post_type></depends>
+                        </tag_name>
+                        <username>
+                            <label>Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>what's your username ?</comment>
+                        </username>
+                        <limit>
+                            <label>Limit</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>How many posts to retrieve ? default is 3</comment>
+                            <!--<depends><filter_posts>0</filter_posts></depends>-->
+                        </limit>
+                    </fields>
+                </post>
+                <post_features translate="label" module="plopcom_insta">
+                    <label>More Configurations</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <link_posts>
+                            <label>Link Posts</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Link posts to instagram post</comment>
+                        </link_posts>
+                        <resolution>
+                            <label>Choose resolution</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>insta/resolutions</source_model>
+                            <sort_order>105</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </resolution>
+                        <caption>
+                            <label>Show Caption</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </caption>
+                        <likes_count>
+                            <label>Show Likes count</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </likes_count>
+                        <comment_count>
+                            <label>Show Comment count</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </comment_count>
+                    </fields>
+                </post_features>
+            </groups>
+        </plopcom_insta>
+    </sections>
+</config>
