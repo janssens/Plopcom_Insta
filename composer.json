@@ -1,0 +1,21 @@
+{
+    "name": "janssens/plopcom_insta",
+    "description": "A Magento 1.9 module to load instagram post from username",
+    "type": "magento-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "gaëtan janssens",
+            "email": "janssensgaetan@gmail.com"
+        }
+    ],
+    "require": {
+       "php": ">=7.1",
+       "magento-hackathon/magento-composer-installer": "*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.0"
+        }
+    }
+}
