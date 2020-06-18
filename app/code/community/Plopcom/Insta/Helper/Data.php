@@ -23,6 +23,14 @@
  */
 class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const MEDIA_LOCAL_DIR =  'plopcom/insta';
+    const SAVE_SUCCESS =  0;
+    const SAVE_WRONG_HTTPCODE =  1;
+    const SAVE_CANNOT_SAVE =  2;
+
+    public function getMediaDir(){
+        return Mage::getBaseDir('media') . DS . self::MEDIA_LOCAL_DIR;
+    }
     //"/tags/".str_replace('#','',$tagname)."/media/recent";
 
     public function addPostFromUsernameToStore($username,$limit = 3,$store_id = null){
@@ -38,7 +46,7 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
         $counter = 0;
         if ($username){
             $url = 'https://www.instagram.com/'.$username.'/';
-            $html = file_get_contents($url);
+            $html = @file_get_contents($url);
             $html = strstr($html, '"entry_data');
             $html = strstr($html, '</script>', true);
             $html = substr($html, 0, -1);
@@ -100,17 +108,28 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
         return $counter;
     }
 
-    protected function saveImage($url,$id){
-        $ch = curl_init($url);
-        if ($this->_createDir(Mage::getBaseDir('media') . DS . 'plopcom_insta')){
+    public function saveImage($url,$id){
+        $dir_exist = false;
+        try{
+            $dir_exist = $this->_createDir($this->getMediaDir());
+        } catch (Exception $e){
+            Mage::log($e->getMessage(),null,'plopcom_insta.log');
+            return array('code'=>self::SAVE_CANNOT_SAVE,'message'=>$e->getMessage());
+        }
+        if ($dir_exist){
             $path = $this->getImagePath($id);
             if (!file_exists($path)){
                 $fp = fopen($path, 'wb');
                 try {
-                    curl_setopt($ch, CURLOPT_FILE, $fp);
-                    curl_setopt($ch, CURLOPT_HEADER, 0);
-                    curl_exec($ch);
-                    curl_close($ch);
+                    if ($this->check200($url)){
+                        $ch = curl_init($url);
+                        curl_setopt($ch, CURLOPT_FILE, $fp);
+                        curl_setopt($ch, CURLOPT_HEADER, 0);
+                        curl_exec($ch);
+                        curl_close($ch);
+                    }else{
+                        return array('code'=>self::SAVE_WRONG_HTTPCODE,'message'=>$url . ' is not available');
+                    }
                 } catch (Exception $e){
                     Mage::log($e->getMessage(),null,'plopcom_insta.log');
                 }
@@ -118,14 +137,27 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
                 fclose($fp);
             }
         }
+        return array('code'=>self::SAVE_SUCCESS,'message'=>'OK');
+    }
+
+    public function check200($url){
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HEADER, true);    // we want headers
+        curl_setopt($ch, CURLOPT_NOBODY, true);    // we don't need body
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_TIMEOUT,10);
+        $output = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return $httpcode == 200;
     }
 
     public function getImagePath($id){
-        return Mage::getBaseDir('media') . DS . 'plopcom'. DS . 'insta' . DS . $id . '.jpg';
+        return $this->getMediaDir() . DS . $id . '.jpg';
     }
 
     public function getImageUrl($id){
-        return Mage::getBaseUrl( Mage_Core_Model_Store::URL_TYPE_MEDIA ) . 'plopcom'. DS . 'insta' . DS . $id . '.jpg';
+        return Mage::getBaseUrl( Mage_Core_Model_Store::URL_TYPE_MEDIA ) . self::MEDIA_LOCAL_DIR . DS . $id . '.jpg';
     }
 
     private function _createDir($dir,$parent = null){

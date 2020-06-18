@@ -250,6 +250,53 @@ class Plopcom_Insta_Adminhtml_Instagram_PostController extends Mage_Adminhtml_Co
     }
 
     /**
+     * mass download - action
+     *
+     * @access public
+     * @return void
+     * @author G Janssens
+     */
+    public function massSavePostsLocallyAction()
+    {
+        $postIds = $this->getRequest()->getParam('post');
+        if (!is_array($postIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('plopcom_insta')->__('Please select posts.')
+            );
+        } else {
+            try {
+                $collection = Mage::getModel('insta/post')
+                    ->getCollection()
+                    ->addFieldToFilter('entity_id', $postIds);
+                /** @var Plopcom_Insta_Model_Post $post */
+                foreach ($collection as $post) {
+                    $return = Mage::helper('plopcom_insta')->saveImage($post->getData('media_url'),$post->getMediaId());
+                    if (is_array($return) && isset($return['code']) && $return['code'] == Plopcom_Insta_Helper_Data::SAVE_WRONG_HTTPCODE){
+                        Mage::getSingleton('adminhtml/session')->addError(
+                            $return['message']
+                        );
+                        $post->setStatus(false)->save();
+                    }
+                    if (is_array($return) && isset($return['code']) && $return['code'] == Plopcom_Insta_Helper_Data::SAVE_CANNOT_SAVE){
+                        Mage::throwException($return['message']);
+                    }
+                }
+                $this->_getSession()->addSuccess(
+                    $this->__('Total of %d posts were successfully updated.', count($postIds))
+                );
+            } catch (Mage_Core_Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('plopcom_insta')->__('There was an error updating posts.')
+                );
+                Mage::logException($e);
+            }
+        }
+        $this->_redirect('*/*/index');
+    }
+
+    /**
      * mass status change - action
      *
      * @access public

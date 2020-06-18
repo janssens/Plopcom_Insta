@@ -256,6 +256,15 @@ class Plopcom_Insta_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widge
                 )
             )
         );
+        $this->getMassactionBlock()->addItem(
+            'image_download',
+            array(
+                'label'   => Mage::helper('plopcom_insta')->__('Save posts locally'),
+                'url'     => $this->getUrl('*/*/massSavePostsLocally', array('_current'=>true)),
+                'confirm' => Mage::helper('plopcom_insta')->__('Are you sure you want to save all images locally ?')
+            )
+        );
+
         return $this;
     }
 

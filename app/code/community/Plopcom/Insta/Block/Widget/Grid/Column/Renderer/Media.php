@@ -5,6 +5,7 @@ class Plopcom_Insta_Block_Widget_Grid_Column_Renderer_Media
 {
     public function render(Varien_Object $row)
     {
+        /** @var  Plopcom_Insta_Model_Post $row */
         $html = '<img src="'.$row->getMediaUrl().'" style="max-height: 50px;" />';
         return $html;
     }
