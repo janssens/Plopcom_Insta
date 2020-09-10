@@ -28,12 +28,12 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
     const SAVE_WRONG_HTTPCODE =  1;
     const SAVE_CANNOT_SAVE =  2;
 
-    const SALT = '123456789AZERTY';
+    const XML_PATH_FOR_SALT = 'plopcom_insta/system/salt';
 
     const XML_PATH_POST_USERNAME = 'plopcom_insta/post/username';
 
     public function getSalt(){
-        return self::SALT;
+        return Mage::app()->getStoreConfig(self::XML_PATH_FOR_SALT,0);
     }
 
     public function getMediaDir(){

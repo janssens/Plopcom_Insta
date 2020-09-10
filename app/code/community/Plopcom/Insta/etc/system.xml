@@ -42,53 +42,6 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <!--<use_local_images translate="label">-->
-                            <!--<label>Use Local images</label>-->
-                            <!--<frontend_type>select</frontend_type>-->
-                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
-                            <!--<sort_order>1</sort_order>-->
-                            <!--<show_in_default>1</show_in_default>-->
-                            <!--<show_in_website>1</show_in_website>-->
-                            <!--<show_in_store>1</show_in_store>-->
-                        <!--</use_local_images>-->
-                        <!--<breadcrumbs translate="label">-->
-                            <!--<label>Use Breadcrumbs</label>-->
-                            <!--<frontend_type>select</frontend_type>-->
-                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
-                            <!--<sort_order>10</sort_order>-->
-                            <!--<show_in_default>1</show_in_default>-->
-                            <!--<show_in_website>1</show_in_website>-->
-                            <!--<show_in_store>1</show_in_store>-->
-                        <!--</breadcrumbs>-->
-                        <!--<post_type>-->
-                            <!--<label>Post source</label>-->
-                            <!--<frontend_type>select</frontend_type>-->
-                            <!--<source_model>insta/options</source_model>-->
-                            <!--<sort_order>20</sort_order>-->
-                            <!--<show_in_default>1</show_in_default>-->
-                            <!--<show_in_website>1</show_in_website>-->
-                            <!--<show_in_store>1</show_in_store>-->
-                        <!--</post_type>-->
-                        <!--<user_id>-->
-                            <!--<label>User ID</label>-->
-                            <!--<frontend_type>text</frontend_type>-->
-                            <!--<sort_order>30</sort_order>-->
-                            <!--<show_in_default>1</show_in_default>-->
-                            <!--<show_in_website>1</show_in_website>-->
-                            <!--<show_in_store>1</show_in_store>-->
-                            <!--<comment><![CDATA[ <a href="https://smashballoon.com/instagram-feed/find-instagram-user-id/" target="_blank">Username to user id</a> ]]></comment>-->
-                            <!--<depends><post_type>account</post_type></depends>-->
-                        <!--</user_id>-->
-<!--                        <tag_name>-->
-<!--                            <label>Tag Name (hashtag)</label>-->
-<!--                            <frontend_type>text</frontend_type>-->
-<!--                            <sort_order>50</sort_order>-->
-<!--                            <show_in_default>1</show_in_default>-->
-<!--                            <show_in_website>1</show_in_website>-->
-<!--                            <show_in_store>1</show_in_store>-->
-<!--                            <comment>without hastag sign</comment>-->
-<!--                            <depends><post_type>hashtag</post_type></depends>-->
-<!--                        </tag_name>-->
                         <username>
                             <label>Username</label>
                             <frontend_type>text</frontend_type>
@@ -98,16 +51,6 @@
                             <show_in_store>1</show_in_store>
                             <comment>what's your username ?</comment>
                         </username>
-<!--                        <limit>-->
-<!--                            <label>Limit</label>-->
-<!--                            <frontend_type>text</frontend_type>-->
-<!--                            <sort_order>90</sort_order>-->
-<!--                            <show_in_default>1</show_in_default>-->
-<!--                            <show_in_website>1</show_in_website>-->
-<!--                            <show_in_store>1</show_in_store>-->
-<!--                            <comment>How many posts to retrieve ? default is 3</comment>-->
-<!--                            &lt;!&ndash;<depends><filter_posts>0</filter_posts></depends>&ndash;&gt;-->
-<!--                        </limit>-->
                     </fields>
                 </post>
                 <post_features translate="label" module="plopcom_insta">

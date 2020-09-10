@@ -19,7 +19,7 @@
 <config>
     <modules>
         <Plopcom_Insta>
-            <version>2.0.3</version>
+            <version>2.0.4</version>
         </Plopcom_Insta>
     </modules>
     <global>
@@ -128,9 +128,9 @@
     </frontend>
     <default>
         <plopcom_insta>
-            <post>
-                <breadcrumbs>1</breadcrumbs>
-            </post>
+            <system>
+                <salt>123456789AZERTY</salt>
+            </system>
         </plopcom_insta>
     </default>
     <crontab>
