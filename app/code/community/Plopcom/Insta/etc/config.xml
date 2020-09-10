@@ -134,15 +134,15 @@
         </plopcom_insta>
     </default>
     <crontab>
-        <jobs>
-            <plopcom_insta_load_new_post>
-                <schedule>
-                    <cron_expr>0 * * * *</cron_expr>
-                </schedule>
-                <run>
-                    <model>plopcom_insta/observer::loadNewPosts</model>
-                </run>
-            </plopcom_insta_load_new_post>
-        </jobs>
+<!--        <jobs>-->
+<!--            <plopcom_insta_load_new_post>-->
+<!--                <schedule>-->
+<!--                    <cron_expr>0 * * * *</cron_expr>-->
+<!--                </schedule>-->
+<!--                <run>-->
+<!--                    <model>plopcom_insta/observer::loadNewPosts</model>-->
+<!--                </run>-->
+<!--            </plopcom_insta_load_new_post>-->
+<!--        </jobs>-->
     </crontab>
 </config>

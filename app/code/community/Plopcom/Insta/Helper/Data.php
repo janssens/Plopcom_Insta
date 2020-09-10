@@ -28,6 +28,14 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
     const SAVE_WRONG_HTTPCODE =  1;
     const SAVE_CANNOT_SAVE =  2;
 
+    const SALT = '123456789AZERTY';
+
+    const XML_PATH_POST_USERNAME = 'plopcom_insta/post/username';
+
+    public function getSalt(){
+        return self::SALT;
+    }
+
     public function getMediaDir(){
         return Mage::getBaseDir('media') . DS . self::MEDIA_LOCAL_DIR;
     }
@@ -42,17 +50,47 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
     }
+
+    public function getUrlForUsername($username){
+        return 'https://www.instagram.com/'.$username.'/';
+    }
+
+    public function getAllUniqueUrls(){
+        $urls = array();
+        /** @var Mage_Core_Model_Store $store */
+        foreach (Mage::app()->getStores() as $store){
+            if ($username = Mage::getStoreConfig(Plopcom_Insta_Helper_Data::XML_PATH_POST_USERNAME,$store)){
+                $urls[$username] = Mage::helper('plopcom_insta')->getUrlForUsername($username);
+            }
+        }
+        return array_unique($urls);
+    }
+
     public function getLastPostFromUsername($username,$limit = 3,$store_id = null){
         $counter = 0;
         if ($username){
-            $url = 'https://www.instagram.com/'.$username.'/';
+            $url = $this->getUrlForUsername($username);
             $html = @file_get_contents($url);
+            $counter = $this->getFromHtml($html,$username,$limit,$store_id);
+        }
+        return $counter;
+    }
+
+    /**
+     * @param string $html
+     * @param string $username
+     * @param integer $limit
+     * @param integer $store_id
+     * @return integer
+     */
+    public function getFromHtml($html,$username,$limit = 3,$store_id = null){
+            $counter = 0;
             $html = strstr($html, '"entry_data');
             $html = strstr($html, '</script>', true);
             $html = substr($html, 0, -1);
             $html = '{'.$html;
             // For debugging... (like when Instagram changes its HTML page output).
-            // echo $html;
+            //echo echo $html; die();
             //$encoding = mb_detect_encoding($html); //ASCII
             $data = json_decode($html);
             if (!$data){
@@ -104,7 +142,6 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
                     break;
                 }
             }
-        }
         return $counter;
     }
 

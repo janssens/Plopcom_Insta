@@ -13,7 +13,7 @@ class Plopcom_Insta_Model_Observer
             foreach ($website->getGroups() as $group) {
                 $stores = $group->getStores();
                 foreach ($stores as $store) {
-                    $username = Mage::getStoreConfig('plopcom_insta/post/username',$store);
+                    $username = Mage::getStoreConfig(Plopcom_Insta_Helper_Data::XML_PATH_POST_USERNAME,$store);
                     if ($username ){
                         if (!in_array($username,$usernames)){
                             $limit = Mage::getStoreConfig('plopcom_insta/post/limit',$store);

@@ -38,11 +38,26 @@ class Plopcom_Insta_Block_Adminhtml_Post extends Mage_Adminhtml_Block_Widget_Gri
         $this->_headerText         = Mage::helper('plopcom_insta')->__('Post');
         $this->_updateButton('add', 'label', Mage::helper('plopcom_insta')->__('Add Post'));
 
-        $message = Mage::helper('plopcom_insta')->__('Are you sure you want to load last posts form instagram ?');
-        $this->addButton('load_last_posts', array(
-            'label'     => Mage::helper('plopcom_insta')->__('Load last Posts'),
-            'onclick'   => "confirmSetLocation('{$message}', '{$this->getUrl('*/*/loadLastPosts')}')",
+//        $message = Mage::helper('plopcom_insta')->__('Are you sure you want to load last posts form instagram ?');
+//        $this->addButton('load_last_posts', array(
+//            'label'     => Mage::helper('plopcom_insta')->__('Load last Posts'),
+//            'onclick'   => "confirmSetLocation('{$message}', '{$this->getUrl('*/*/loadLastPosts')}')",
+//            'class'     => 'go' //not really good icon
+//        ));
+
+        $this->addButton('user_script', array(
+            'label'     => Mage::helper('plopcom_insta')->__('User script'),
+            'onclick'   => "window.open('".Mage::getUrl('instagram/secret/script')."')",
             'class'     => 'go' //not really good icon
         ));
+
+        foreach (Mage::helper('plopcom_insta')->getAllUniqueUrls() as $key => $url){
+            $this->addButton('user_'.$key, array(
+                'label'     => '@'.$key,
+                'onclick'   => "window.open('".$url."')",
+                'class'     => 'go' //not really good icon
+            ));
+        }
+
     }
 }
