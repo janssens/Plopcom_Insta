@@ -33,7 +33,7 @@ class Plopcom_Insta_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_POST_USERNAME = 'plopcom_insta/post/username';
 
     public function getSalt(){
-        return Mage::app()->getStoreConfig(self::XML_PATH_FOR_SALT,0);
+        return Mage::getStoreConfig(self::XML_PATH_FOR_SALT,0);
     }
 
     public function getMediaDir(){
