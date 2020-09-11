@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-       "php": ">=7.1",
-       "magento-hackathon/magento-composer-installer": "*"
+        "php": ">=7.1",
+        "magento-hackathon/magento-composer-installer": "*"
     },
     "extra": {
         "branch-alias": {

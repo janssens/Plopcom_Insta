@@ -47,7 +47,7 @@ class Plopcom_Insta_Block_Adminhtml_Post extends Mage_Adminhtml_Block_Widget_Gri
 
         $this->addButton('user_script', array(
             'label'     => Mage::helper('plopcom_insta')->__('User script'),
-            'onclick'   => "window.open('".Mage::getUrl('instagram/secret/script')."')",
+            'onclick'   => "window.open('".Mage::helper("adminhtml")->getUrl('instagram/secret/script')."')",
             'class'     => 'go' //not really good icon
         ));
 

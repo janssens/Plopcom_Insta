@@ -1,21 +1,9 @@
 <?php
 
-class Plopcom_Insta_SecretController extends Mage_Core_Controller_Front_Action
+class Plopcom_Insta_Adminhtml_Instagram_SecretController extends Mage_Core_Controller_Front_Action
 {
-    private function _init(){
-        Mage::getSingleton('core/session', array('name' => 'adminhtml'));
-        $session = Mage::getSingleton('admin/session');
-        if ( $session->isLoggedIn() ) {
-            return true;
-        } else {
-            echo "Oups, you are not logged in as an admin.";
-            echo '<script> setTimeout(function(){window.close();},3000) </script>'."\n";
-            die();
-        }
-    }
 	public function loadAction()
 	{
-	    $this->_init();
 	    $helper = Mage::helper('plopcom_insta');
 	    if (isset($_POST['content'])&&isset($_POST['location'])&&isset($_POST['salt'])){
 	        if (md5($helper->getSalt())==$_POST['salt']){
@@ -45,7 +33,6 @@ class Plopcom_Insta_SecretController extends Mage_Core_Controller_Front_Action
 
 	public function scriptAction()
     {
-        $this->_init();
 
         $content = "// ==UserScript==\n";
         $content .= "// @name     Magento instagram importer\n";
@@ -71,7 +58,7 @@ class Plopcom_Insta_SecretController extends Mage_Core_Controller_Front_Action
 let my_location = window.location;
 let my_htmlContent = window.document.querySelector('body').innerHTML;
 let my_salt = '".md5(Mage::helper('plopcom_insta')->getSalt())."';
-let my_url = '".Mage::getUrl('instagram/secret/load')."';
+let my_url = '".Mage::helper("adminhtml")->getUrl('instagram/secret/load')."';
 
 console.log('Hacked :) !');
 
