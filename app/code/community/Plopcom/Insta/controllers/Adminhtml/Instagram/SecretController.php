@@ -1,53 +1,24 @@
 <?php
 
-class Plopcom_Insta_Adminhtml_Instagram_SecretController extends Mage_Core_Controller_Front_Action
+class Plopcom_Insta_Adminhtml_Instagram_SecretController extends Mage_Adminhtml_Controller_Action
 {
-	public function loadAction()
-	{
-	    $helper = Mage::helper('plopcom_insta');
-	    if (isset($_POST['content'])&&isset($_POST['location'])&&isset($_POST['salt'])){
-	        if (md5($helper->getSalt())==$_POST['salt']){
-                $location = $_POST['location'];
-                $username = false;
-                foreach ($helper->getAllUniqueUrls() as $k => $url){
-                    if (strpos($url,$location)===0){
-                        $username = $k;
-                        break;
-                    }
-                }
-                if ($username){
-                    $content = $_POST['content'];
-                    $imported = Mage::helper('plopcom_insta')->getFromHtml($content,$username,10);
-                    echo $imported.' post imported '.(($imported>0) ? "🙂":"").'!'."\n";
-                }else{
-                    echo 'Cannot import form this url ⚠ !'."\n";
-                }
-            }else{
-                echo 'Someting went wrong 😥 !'."\n";
-            }
-        }
-
-	    echo '<script> setTimeout(function(){window.close();},3000) </script>'."\n";
-	    die();
-	}
-
 	public function scriptAction()
     {
-
-        $content = "// ==UserScript==\n";
-        $content .= "// @name     Magento instagram importer\n";
-        $content .= "// @description This script add a button on instagram to import post in magento\n";
-        $content .= "// @author   gjanssens plopcom.fr\n";
-        $content .= "// @icon ".Mage::getDesign()->getSkinUrl('plopcom/insta/instaToMage.png')."\n";
         $names = array();
         /** @var Mage_Core_Model_Store $store */
         foreach (Mage::app()->getStores() as $store){
             $names[] = $store->getFrontendName()." ";
         }
+
+        $content = "// ==UserScript==\n";
+        $content .= "// @name     Magento instagram importer for ";
         foreach (array_unique($names) as $name){
             $content .= $name." ";
         }
         $content .= "\n";
+        $content .= "// @description This script add a button on instagram to import post in magento\n";
+        $content .= "// @author   gjanssens plopcom.fr\n";
+        $content .= "// @icon ".Mage::getDesign()->getSkinUrl('plopcom/insta/instaToMage.png')."\n";
         $content .= "// @version  1\n";
         $content .= "// @grant    none\n";
         foreach (Mage::helper('plopcom_insta')->getAllUniqueUrls() as $url){
@@ -58,28 +29,18 @@ class Plopcom_Insta_Adminhtml_Instagram_SecretController extends Mage_Core_Contr
 let my_location = window.location;
 let my_htmlContent = window.document.querySelector('body').innerHTML;
 let my_salt = '".md5(Mage::helper('plopcom_insta')->getSalt())."';
-let my_url = '".Mage::helper("adminhtml")->getUrl('instagram/secret/load')."';
+let my_url = '".Mage::getUrl('instagram/secret/load')."';
 
 console.log('Hacked :) !');
 
 setTimeout(function(){
         console.log('May now be fully loaded (?)');
-        let a = document.querySelectorAll(\"[href='/accounts/emailsignup/']\")[0];
-        if (typeof(a) == 'undefined'){ //may be logged in
-            a = document.querySelectorAll(\"[href='/accounts/activity/']\")[0];
-        }
-        if (typeof(a) != 'undefined'){
-            init();
-            let sibling = a.parentElement;
-            let clonedElement = sibling.cloneNode(true);
-            let new_a = clonedElement.querySelector('a');
-            new_a.setAttribute('href','javascript:PostContent()');
-            new_a.innerText = 'vers magento et au delà';
-            let container = sibling.parentElement;
-            container.insertBefore(clonedElement,container.firstChild);
-        }else{
-            console.log('cannot find a place to fit button');
-        }
+        init();
+        let button = document.createElement(\"a\");
+        button.setAttribute('href','javascript:PostContent()');
+        button.setAttribute('style','position:fixed;top:10px; left: 10px;border: 1px solid black;background: white;border-radius: 32px;width: 64px;height: 64px;display: block;');
+        button.innerHTML = '<img src=\"https://www.flaneurz.local/skin/frontend/base/default/plopcom/insta/instaToMage.png\" alt=\"vers magento et au delà\" width=\"48px\" height=\"48px\" style=\"margin:8px;\">';
+        document.body.appendChild(button);
 },1500);
 
 function OpenWindowWithPost(url, windowoption, name, params)
@@ -123,7 +84,7 @@ function PostContent()
     }
 ";
         header("Content-type: text/javascript");
-        header("Content-Disposition: attachment; filename=\"insta-magento.user.js\"");
+        header("Content-Disposition: inline; filename=\"insta-magento.user.js\"");
         header("Content-Length: ".strlen($content));
         echo $content;
         die();
