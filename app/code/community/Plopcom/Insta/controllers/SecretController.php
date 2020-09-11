@@ -2,9 +2,20 @@
 
 class Plopcom_Insta_SecretController extends Mage_Core_Controller_Front_Action
 {
-
+    private function _init(){
+        Mage::getSingleton('core/session', array('name' => 'adminhtml'));
+        $session = Mage::getSingleton('admin/session');
+        if ( $session->isLoggedIn() ) {
+            return true;
+        } else {
+            echo "Oups, you are not logged in as an admin.";
+            echo '<script> setTimeout(function(){window.close();},3000) </script>'."\n";
+            die();
+        }
+    }
 	public function loadAction()
 	{
+	    $this->_init();
 	    $helper = Mage::helper('plopcom_insta');
 	    if (isset($_POST['content'])&&isset($_POST['location'])&&isset($_POST['salt'])){
 	        if (md5($helper->getSalt())==$_POST['salt']){
@@ -34,11 +45,13 @@ class Plopcom_Insta_SecretController extends Mage_Core_Controller_Front_Action
 
 	public function scriptAction()
     {
-        header("Content-type: text/javascript");
-        header("Content-Disposition: inline; filename=\"user.script.js\"");
-        //header("Content-Length: ".filesize("my-file.js"));
-        $content = "// ==UserScript==
-// @name     load Post from Instagram for ";
+        $this->_init();
+
+        $content = "// ==UserScript==\n";
+        $content .= "// @name     Magento instagram importer\n";
+        $content .= "// @description This script add a button on instagram to import post in magento\n";
+        $content .= "// @author   gjanssens plopcom.fr\n";
+        $content .= "// @icon ".Mage::getDesign()->getSkinUrl('plopcom/insta/instaToMage.png')."\n";
         $names = array();
         /** @var Mage_Core_Model_Store $store */
         foreach (Mage::app()->getStores() as $store){
@@ -47,8 +60,9 @@ class Plopcom_Insta_SecretController extends Mage_Core_Controller_Front_Action
         foreach (array_unique($names) as $name){
             $content .= $name." ";
         }
-        $content .= "\n// @version  1
-// @grant   none\n";
+        $content .= "\n";
+        $content .= "// @version  1\n";
+        $content .= "// @grant    none\n";
         foreach (Mage::helper('plopcom_insta')->getAllUniqueUrls() as $url){
             $content .= "// @match	".$url."*\n";
         }
@@ -113,7 +127,7 @@ function PostContent()
        var param = { 'content' : my_htmlContent,'salt' : my_salt,'location' : my_location};
       OpenWindowWithPost(my_url,
       \"width=730,height=345,left=100,top=100,resizable=no,scrollbars=no\",
-      \"NewFile\", param);
+      \"PostWindow\", param);
     }
     
     function init()
@@ -121,6 +135,9 @@ function PostContent()
          window.PostContent = PostContent;
     }
 ";
+        header("Content-type: text/javascript");
+        header("Content-Disposition: attachment; filename=\"insta-magento.user.js\"");
+        header("Content-Length: ".strlen($content));
         echo $content;
         die();
     }

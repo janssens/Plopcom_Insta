@@ -6,4 +6,5 @@ app/design/adminhtml/default/default/template/plopcom/insta/                    
 app/design/frontend/default/default/layout/*.xml                                    app/design/frontend/default/default/layout/
 app/design/frontend/default/default/template/plopcom/insta/                         app/design/frontend/default/default/template/plopcom/insta/
 app/etc/modules/*.xml                                                               app/etc/modules/
+skin/frontend/base/default/plopcom/insta/instaToMage.png                            skin/frontend/base/default/plopcom/insta/instaToMage.png
 js/plopcom/insta/                                                                   js/plopcom/insta/
